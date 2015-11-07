@@ -32,5 +32,8 @@ public class WerwolfGUI {
 		frame1.pack();
 		frame1.setLocationRelativeTo(null);
 		frame1.setVisible(true);
+		
+		
+		//Das ist ein Kommentar
 	}
 }
