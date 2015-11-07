@@ -65,12 +65,4 @@ public class WerwolfGUI {
 	public void sendText(String message) {
 		Controler.send(message);
 	}
-	
-	/*public String sendText() {
-		
-	}*/
-	
-	/*public static void main(String[] args) {
-		new WerwolfGUI();
-	}*/
 }
