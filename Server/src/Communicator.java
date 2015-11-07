@@ -3,48 +3,47 @@ import java.net.*;
 import java.util.*;
 
 public class Communicator {
-	private OutputStream ops;
-	private DataInputStream dips;
-	private List<String> messages;
+	private ServerSocket ssock;
+	private List<DataOutputStream> streams;
 	
-	public Communicator() {
-		this.messages = new ArrayList<String>();
-	}
-	
-	public void connect(String ip, int port) throws IOException{
-		Socket sock = new Socket(ip, port);
-		this.ops = sock.getOutputStream();
-		this.dips = new DataInputStream(sock.getInputStream());
+	public Communicator (int port) throws IOException{
+		this.ssock = new ServerSocket(port);
+		System.out.println("Server started on port " + Integer.toString(port) + ".");
 		
-		Thread t = new Thread(new receiveThread());
-		t.start();
+		this.streams = new ArrayList<DataOutputStream>();
 	}
 	
-	public void send(String message) throws IOException{
-		this.ops.write(message.getBytes());
-	}
-
-	public synchronized String getNewestMessage(){
-		String msg = null;
-		if(this.messages.size() > 0){
-			msg = this.messages.get(0);
-		}
-		this.messages.remove(0);
-		return msg;
-	}
-	
-	private class receiveThread implements Runnable{
+	private class acceptThread implements Runnable {
 		@Override
 		public void run() {
-			while(true){
+			System.out.println("The server now accepts connections from clients.");
+			while(true) {
 				try {
-					System.out.println(dips.readUTF());
+					Socket c = ssock.accept();
+					DataOutputStream dops = new DataOutputStream(c.getOutputStream());
+					DataInputStream dips = new DataInputStream(c.getInputStream());
+					
+					streams.add(dops);
+					new Thread(new receiveThread()).start();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			
 		}
+		
 	}
 	
+	private class receiveThread implements Runnable {
+		public public receiveThread() {
+			
+		}
+		
+		@Override
+		public void run() {
+			while(true) {
+				
+			}
+		}
+		
+	}
 }
