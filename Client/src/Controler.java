@@ -1,14 +1,38 @@
 
 public class Controler {
-	public void main()
+	
+	Communicator COM;
+	Werwolf GUI;
+	
+	
+	public static void main(String[] args)
 	{
+		COM = new Communicator();
+		GUI = new Werwolf();
+		
 		
 	}
 	
-	private void sendMessage(String message)
+	private String encode()
+	
+	private static void sendMessage(String message)
 	{
-		//Sende Nachricht an Server
+		//Nachricht senden
+		COM.send(message)
 	}
 	
+	private static void getMessage()
+	{
+		COM.getNewest();
+	}
 	
+
+	
+	private void textMessageReceived(String message)
+	{
+		GUI.receiveText(message);
+	}
 }
+
+
+//getNewest
