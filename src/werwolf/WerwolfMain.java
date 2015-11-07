@@ -1,9 +1,12 @@
 package werwolf;
 
 public class WerwolfMain {
-
-	public static void main(String[] args) {
-		
+	
+	public WerwolfMain() {
+		new WerwolfGUI(8);
 	}
 
+	public static void main(String[] args) {
+		new WerwolfMain();
+	}
 }
