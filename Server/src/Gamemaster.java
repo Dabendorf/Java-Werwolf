@@ -4,7 +4,6 @@ public class Gamemaster {
 	
 	private List<Player> players;
 	private Handler handler;
-	
 	private boolean running = false;
 	
 	public enum Actions{
@@ -13,6 +12,12 @@ public class Gamemaster {
 		sendMessage,
 		vote,
 		kill;
+	}
+	
+	public enum Phase{
+		werewolvesKilling,
+		announceVictim,
+		vote;
 	}
 	
 	public Gamemaster(Handler handler){
