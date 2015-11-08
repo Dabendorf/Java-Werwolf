@@ -31,8 +31,8 @@ public class Communicator {
 		String msg = null;
 		if(this.messages.size() > 0){
 			msg = this.messages.get(0);
+			this.messages.remove(0);
 		}
-		this.messages.remove(0);
 		return msg;
 	}
 	

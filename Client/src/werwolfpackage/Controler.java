@@ -46,7 +46,7 @@ public class Controler {
 	}
 
 	//Zu Server verbinden
-	public static void connectToServer(String ipAdress, String username)
+	public static void connectToServer(String ipAdress, String username) throws IOException
 	{
 		//Zu Server verbinden
 		try {
@@ -76,7 +76,7 @@ public class Controler {
 	}
 	
 	//String an Server senden
-	private static void sendToServer(String output)
+	private static void sendToServer(String output) throws IOException
 	{
 		COM.send(output);
 	}
