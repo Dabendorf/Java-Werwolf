@@ -4,13 +4,13 @@ public class Controler {
 	
 	static Communicator COM;
 	static WerwolfGUI GUI;
-	static boolean running
+	static boolean running;
 	
 	public static void main(String[] args)
 	{
 		running = true;
 		COM = new Communicator();
-		
+		//ConnectToServer
 		
 		Thread guiThread = new Thread(new Runnable() {
 			@Override
@@ -28,6 +28,10 @@ public class Controler {
 		});
 	}
 
+	private static void connectToServer(String ipAdress)
+	{
+		COM.connect(ipAdress,8080);
+	}
 	
 	public static void sendMessage(String message)
 	{
@@ -38,7 +42,7 @@ public class Controler {
 		COM.send(message);
 	}
 	
-	private static void sendToServer(output)
+	private static void sendToServer(String output)
 	{
 		COM.send(output);
 	}
