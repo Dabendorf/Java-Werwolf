@@ -59,6 +59,8 @@ public class WerwolfGUI {
 		chatList.setSelectionBackground(new Color(0x33B200));
 		chatListModel.addElement(text);
 		textInput.setText("");
+		
+		//Test
 	}
 	
 	public void sendText(String message) {
