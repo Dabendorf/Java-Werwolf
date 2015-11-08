@@ -6,19 +6,24 @@ public class Gamemaster {
 	private List<Player> players;
 	private Handler handler;
 	private boolean running = false;
+	private Phase currentPhase;
+	
+	private List<Player> villagers;
+	private List<Player> werewolves;
 	
 	public enum Actions{
 		// Basic Actions for the game
-		login,
-		sendMessage,
-		vote,
-		kill;
+		Login,
+		SendMessage,
+		Vote,
+		Kill;
 	}
 	
 	public enum Phase{
-		werewolvesKilling,
-		announceVictim,
-		vote;
+		Preparation,
+		WerewolvesKilling,
+		AnnounceVictim,
+		Vote;
 	}
 	
 	public Gamemaster(Handler handler){
@@ -51,9 +56,11 @@ public class Gamemaster {
 	}
 	
 	public void start(){
+		currentPhase = Phase.Preparation;
 		sendToAll("Das Spiel startet jetzt.\n");
 		for(Player player : players){
 			player.setRole(RoleId.Villager);
+			villagers.add(player);
 		}
 		Random random = new Random();
 		Player player;
@@ -62,16 +69,32 @@ public class Gamemaster {
 			 player = players.get(random.nextInt(players.size()));
 			 if(player.getRole() == RoleId.Villager){
 				 player.setRole(RoleId.Werewolf);
-				 handler.sendTo(player, "Du bist ein Werwolf!");
+				 werewolves.add(player);
+				 villagers.remove(player);
+				 handler.sendMessage(player, "Du bist ein Werwolf!");
 			 }
 			 else
 				 i--;
 		}
+		for(Player villager : villagers)
+			handler.sendMessage(player, "Du bist ein Dorfbewohner!");
+		
 		sendToAll("Nacht fällt über Düsterwald.\n"
 				+ "Alle Bewohner des Dorfes schlafen ein.");
+		
+		werwolfPhase();
 	}
 	
 	public void run(){
 		
+	}
+	
+	private void werwolfPhase(){
+		currentPhase = Phase.WerewolvesKilling;
+		for(Player player : werewolves){
+			handler.sendMessage(player, "Die Werwoelfe erwachen und stimmen für ein Opfer ab.");
+		}
+		// hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
+		Vote vote = new Vote(werewolves);
 	}
 }

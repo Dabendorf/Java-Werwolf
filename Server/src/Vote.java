@@ -4,7 +4,7 @@ public class Vote {
 	private List<Player> participants; 
 	private List<Player> nominees;
 	
-	public Vote(Player... participants){
+	public Vote(List<Player> participants){
 		for(Player participant : participants)
 			this.participants.add(participant);
 	}
