@@ -100,7 +100,7 @@ public class Gamemaster {
 	private void werewolfPhase(){
 		currentPhase = Phase.WerewolvesKilling;
 		for(Player player : werewolves){
-			handler.sendMessage(player, "Die Werwoelfe erwachen und stimmen für ein Opfer ab.");
+			handler.sendMessage(player, "Die Werwölfe erwachen und stimmen für ein Opfer ab.");
 		}
 		// TODO hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
 		Vote vote = new Vote(werewolves);
@@ -132,10 +132,26 @@ public class Gamemaster {
 		switch(loser.getRole())
 		{
 		case Villager:
+			villagers.remove(loser);
 			handler.sendToAll("Er war ein Dorfbewohner.");
+			if(villagers.isEmpty()){
+				handler.sendToAll("Die Werwölfe haben gewonnen.");
+				running = false;
+			}
+			
 		
 		case Werewolf:
+			werewolves.remove(loser);
 			handler.sendToAll("Er war ein Werwolf.");
+			if(werewolves.isEmpty()){
+				handler.sendToAll("Die Dorfbewohner haben gewonnen.");
+				running = false;
+			}
+			
 		}
+	}
+	
+	public static void main(String[] args){
+		new Gamemaster();
 	}
 }
