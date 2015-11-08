@@ -50,7 +50,7 @@ public class Controler {
 	{
 		//Zu Server verbinden
 		try {
-			COM.connect(ipAdress,8080);
+			COM.connect(ipAdress,8084);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
