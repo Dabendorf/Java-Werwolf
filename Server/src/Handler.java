@@ -13,13 +13,22 @@ public class Handler {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
-		for(Player p : players){
-			
+		for(int i = 1; i < players.size();  i++){
+			sockets.put(players.get(i), com.getClients().get(i));
 		}
 		new Thread(new incomingThread()).start();
 	}
 	
 	//command for Gamemaster from empfänger
+	
+	public void sendToPlayer(Player p, String msg) {
+		Socket playerSock = sockets.get(p);
+		try {
+			com.send(playerSock, msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public void sendToPlayer(Socket s, String msg) {
 		try {
@@ -29,7 +38,7 @@ public class Handler {
 		}
 	}
 	
-	public void sendall(String msg) {
+	public void sendAll(String msg) {
 		for (Socket s : com.getClients()) {
 			sendToPlayer(s, msg);
 		}
