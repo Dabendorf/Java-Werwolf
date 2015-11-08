@@ -38,7 +38,7 @@ public class Handler {
 		}
 	}
 	
-	public void sendAll(String msg) {
+	public void sendToAll(String msg) {
 		for (Socket s : com.getClients()) {
 			sendToPlayer(s, msg);
 		}
@@ -73,7 +73,7 @@ public class Handler {
 			case "msg":
 				String recver = splitCmd[1];
 				String msg = splitCmd[2];
-				com.send(/*HIER KOMMT EINE ABFRAGE SPIELER-> SOCKET*/, msg);
+				com.send(, msg);
 				break;
 				
 			case "vote":
