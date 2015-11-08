@@ -1,5 +1,7 @@
 package werwolfpackage;
 
+import java.io.IOException;
+
 public class Controler {
 	
 	static Communicator COM;
@@ -26,7 +28,12 @@ public class Controler {
 		Thread messageThread = new Thread(new Runnable(){
 			@Override
 			public void run(){
-				getMessage();
+				try {
+					getMessage();
+				} catch (InterruptedException e) {
+					running = false;
+					e.printStackTrace();
+				}
 			}
 		});
 		messageThread.start();
@@ -42,7 +49,13 @@ public class Controler {
 	public static void connectToServer(String ipAdress, String username)
 	{
 		//Zu Server verbinden
-		COM.connect(ipAdress,8080);
+		try {
+			COM.connect(ipAdress,8080);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Verbunden");
 		//Usernamen weitergeben
 		sendToServer("user;" + username);
 	}
@@ -54,7 +67,12 @@ public class Controler {
 		String output = "msg;" + message;
 		
 		//Nachricht senden
+		try{
 		COM.send(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//String an Server senden
@@ -64,12 +82,12 @@ public class Controler {
 	}
 	
 	//Auf eingehende Nachrichten überprüfen (alle 500 ms)
-	private static void getMessage()
+	private static void getMessage() throws InterruptedException
 	{
 		while (running)
 		{
 			Thread.sleep(500);
-			String news = COM.getNewest();
+			String news = COM.getLatestMessage();
 			if (!(news == null))
 			{
 				String[] inputStream = news.split(";");
@@ -81,7 +99,7 @@ public class Controler {
 					{
 						playerArr[i-1] = inputStream[i];
 					}
-					Model.
+					Model.setPlayers(playerArr);
 				}
 			}
 		}

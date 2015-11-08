@@ -1,11 +1,11 @@
 package werwolfpackage;
 
 public class Model {
-	private gameState state;
-	private Player [] players;
+	private static gameState state;
+	private static Player [] players;
 	
-	public Model (int playerCount){
-		players = new Player[playerCount];
+	public static void setPlayers (String[] playerlist){
+		players = playerlist;
 	}
 	
 	private enum gameState {
