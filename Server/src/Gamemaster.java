@@ -45,7 +45,7 @@ public class Gamemaster {
 		*/
 	}
 	
-	public void sendToRole(String message, RoleId role){
+	public void sendTo(String message, RoleId role){
 		//  send message to all werewolves
 		/*
 		for (Player player : players){
