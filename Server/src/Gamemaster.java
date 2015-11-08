@@ -8,8 +8,9 @@ public class Gamemaster {
 	private boolean running = false;
 	private Phase currentPhase;
 	
-	private ArrayList<Player> villagers;
-	private ArrayList<Player> werewolves;
+	private ArrayList<Player> villagers = new ArrayList<Player>();
+	private ArrayList<Player> werewolves = new ArrayList<Player>();
+	private ArrayList<Player> alivePlayers = new ArrayList<Player>();
 	
 	public enum Actions{
 		// Basic Actions for the game
@@ -31,7 +32,7 @@ public class Gamemaster {
 	
 	public void registerPlayer(Player player){
 		players.add(player);
-		if(players.size() >= 8)
+		if(players.size() >= 4)
 			start();
 	}
 	
@@ -60,11 +61,12 @@ public class Gamemaster {
 		for(Player player : players){
 			player.setRole(RoleId.Villager);
 			villagers.add(player);
+			alivePlayers.add(player);
 		}
 		Random random = new Random();
 		Player player;
 		// This piece of codes sets a fourth of the players to be werewolves
-		for(int i = 0; i < (int)players.size() / 4; i++){
+		for(int i = 0; i < (int)players.size() / 2; i++){
 			 player = players.get(random.nextInt(players.size()));
 			 if(player.getRole() == RoleId.Villager){
 				 player.setRole(RoleId.Werewolf);
@@ -81,26 +83,53 @@ public class Gamemaster {
 		sendToAll("Nacht fällt über Düsterwald.\n"
 				+ "Alle Bewohner des Dorfes schlafen ein.");
 		
-		werwolfPhase();
-		vote();
+		running = true;
+		Thread thread = new Thread( new Runnable(){
+			public void run(){
+				while (running){
+					werewolfPhase();
+					vote();
+				}
+			}
+		});
 	}
 	
-	public void run(){
-		
-	}
 	
-	private void werwolfPhase(){
+	
+	private void werewolfPhase(){
 		currentPhase = Phase.WerewolvesKilling;
 		for(Player player : werewolves){
 			handler.sendMessage(player, "Die Werwoelfe erwachen und stimmen für ein Opfer ab.");
 		}
-		// hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
+		// TODO hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
 		Vote vote = new Vote(werewolves);
 		// TODO auf votes warten und ggf. vote.receiveVote() aufrufen, bis alle woelfe gevotet haben
 		Player loser = vote.performVote();
 		handler.sendToAll("Die Werwölfe haben sich für ein Opfer entschieden!");
-		loser.kill(handler);
+			
+		kill(loser);
+		
 		handler.sendToAll("Das Opfer war " + loser.getName() + ".");
+	}
+	
+	private void vote(){
+		currentPhase = Phase.Vote;
+		// TODO ab jetzt sind wieder alle am Chat beteiligt
+		handler.sendToAll("Alle waehlen nun fuer einen Mitbewohner ab, der exekutiert werden soll.");
+		Vote vote = new Vote(alivePlayers);
+		// TODO auf alle votes warten und vote.receiveVote() ausfuehren
+		Player loser = vote.performVote();
+		handler.sendToAll("Das Voting ist beendet! Das Opfer ist " + loser.getName() + " mit " + 
+				loser.countVotes + " Votes.");
+		
+		loser.kill();
+		alivePlayers.remove(loser);
+		kill(loser);
+	}
+	
+	private void kill(Player loser){
+		loser.kill();
+		alivePlayers.remove(loser);
 		switch(loser.getRole())
 		{
 		case Villager:
@@ -109,21 +138,5 @@ public class Gamemaster {
 		case Werewolf:
 			handler.sendToAll("Er war ein Werwolf.");
 		}
-	}
-	
-	private void vote(){
-		currentPhase = Phase.Vote;
-		// TODO ab jetzt sind wieder alle am Chat beteiligt
-		handler.sendToAll("Alle waehlen nun fuer einen Mitbewohner ab, der exekutiert werden soll.");
-		ArrayList<Player> alivePlayers = new ArrayList<Player>();
-		for(Player player : players){
-			if(player.isAlive())
-				alivePlayers.add(player);
-		}
-		Vote vote = new Vote(alivePlayers);
-		// TODO auf alle votes warten und vote.receiveVote() ausfuehren
-		Player loser = vote.performVote();
-		handler.sendToAll("Das Voting ist beendet! Das Opfer ist " + loser.getName() + " mit " + 
-				loser.countVotes + " Votes.");
 	}
 }

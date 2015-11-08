@@ -1,5 +1,6 @@
 
 public class Player {
+	
 	private String name;
 	private boolean isAlive;
 	public int countVotes = 0;
@@ -14,7 +15,7 @@ public class Player {
 		return this.role;
 	}
 	
-	public void kill(Handler handler){
+	public void kill(){
 		this.isAlive = false;
 	}
 
