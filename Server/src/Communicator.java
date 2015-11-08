@@ -28,7 +28,7 @@ public class Communicator {
 		this.clients.get(s).println(message);
 	}
 	
-	public List<?> getClients(){
+	public ArrayList<Socket> getClients(){
 		ArrayList<Socket> list = new ArrayList<Socket>();
 		for (Socket s : this.clients.keySet()) {
 			list.add(s);
