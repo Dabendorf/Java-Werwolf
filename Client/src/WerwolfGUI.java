@@ -1,5 +1,3 @@
-package werwolf;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -63,6 +61,6 @@ public class WerwolfGUI {
 	}
 	
 	public void sendText(String message) {
-		Controler.send(message);
+		Controler.sendMessage(message);
 	}
 }
