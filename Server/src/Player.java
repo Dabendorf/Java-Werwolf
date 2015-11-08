@@ -14,7 +14,7 @@ public class Player {
 		return this.role;
 	}
 	
-	public void kill(){
+	public void kill(Handler handler){
 		this.isAlive = false;
 	}
 
@@ -28,5 +28,9 @@ public class Player {
 	
 	public String getName(){
 		return this.name;
+	}
+	
+	public boolean isAlive(){
+		return this.isAlive;
 	}
 }

@@ -1,15 +1,15 @@
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Gamemaster {
 	
-	private List<Player> players;
+	private ArrayList<Player> players = new ArrayList<Player>();
 	private Handler handler;
 	private boolean running = false;
 	private Phase currentPhase;
 	
-	private List<Player> villagers;
-	private List<Player> werewolves;
+	private ArrayList<Player> villagers;
+	private ArrayList<Player> werewolves;
 	
 	public enum Actions{
 		// Basic Actions for the game
@@ -22,7 +22,6 @@ public class Gamemaster {
 	public enum Phase{
 		Preparation,
 		WerewolvesKilling,
-		AnnounceVictim,
 		Vote;
 	}
 	
@@ -83,6 +82,7 @@ public class Gamemaster {
 				+ "Alle Bewohner des Dorfes schlafen ein.");
 		
 		werwolfPhase();
+		vote();
 	}
 	
 	public void run(){
@@ -96,7 +96,34 @@ public class Gamemaster {
 		}
 		// hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
 		Vote vote = new Vote(werewolves);
-		// TODO auf votes warten und ggf. vote.receiveVote() aufrufen
+		// TODO auf votes warten und ggf. vote.receiveVote() aufrufen, bis alle woelfe gevotet haben
+		Player loser = vote.performVote();
+		handler.sendToAll("Die Werwölfe haben sich für ein Opfer entschieden!");
+		loser.kill(handler);
+		handler.sendToAll("Das Opfer war " + loser.getName() + ".");
+		switch(loser.getRole())
+		{
+		case Villager:
+			handler.sendToAll("Er war ein Dorfbewohner.");
 		
+		case Werewolf:
+			handler.sendToAll("Er war ein Werwolf.");
+		}
+	}
+	
+	private void vote(){
+		currentPhase = Phase.Vote;
+		// TODO ab jetzt sind wieder alle am Chat beteiligt
+		handler.sendToAll("Alle waehlen nun fuer einen Mitbewohner ab, der exekutiert werden soll.");
+		ArrayList<Player> alivePlayers = new ArrayList<Player>();
+		for(Player player : players){
+			if(player.isAlive())
+				alivePlayers.add(player);
+		}
+		Vote vote = new Vote(alivePlayers);
+		// TODO auf alle votes warten und vote.receiveVote() ausfuehren
+		Player loser = vote.performVote();
+		handler.sendToAll("Das Voting ist beendet! Das Opfer ist " + loser.getName() + " mit " + 
+				loser.countVotes + " Votes.");
 	}
 }

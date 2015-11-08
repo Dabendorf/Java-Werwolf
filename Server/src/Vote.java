@@ -1,10 +1,10 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class Vote {
-	private List<Player> participants; 
-	private List<Player> nominees;
+	private ArrayList<Player> participants = new ArrayList<Player>(); 
+	private ArrayList<Player> nominees = new ArrayList<Player>();
 	
-	public Vote(List<Player> participants){
+	public Vote(ArrayList<Player> participants){
 		for(Player participant : participants)
 			this.participants.add(participant);
 	}
