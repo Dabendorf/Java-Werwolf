@@ -10,7 +10,6 @@ public class Controler {
 	{
 		running = true;
 		COM = new Communicator();
-		//ConnectToServer
 		
 		Thread guiThread = new Thread(new Runnable() {
 			@Override
@@ -28,9 +27,10 @@ public class Controler {
 		});
 	}
 
-	private static void connectToServer(String ipAdress)
+	private static void connectToServer(String ipAdress, String username)
 	{
 		COM.connect(ipAdress,8080);
+		COM.sendMessage("user;" + username);
 	}
 	
 	public static void sendMessage(String message)
