@@ -33,7 +33,10 @@ public class WerwolfGUI {
 		loadFrame();
 	}
 	
-	public void askName() {
+	/**
+	 * Diese Methode fragt den Spieler nach der IP-Adresse und seinem Benutzernamen.
+	 */
+	private void askName() {
 		JTextField usernameField = new JTextField(new Feldbegrenzung(12), "", 0);
 		JTextField ipadressField = new JTextField();
 		
@@ -55,7 +58,10 @@ public class WerwolfGUI {
 	    }
 	}
 	
-	public void loadFrame() {
+	/**
+	 * Diese Methode laedt die graphische Oberflaeche des Spielerclients.
+	 */
+	private void loadFrame() {
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.setPreferredSize(new Dimension(600,400));
 		frame1.setMinimumSize(new Dimension(600,400));
@@ -91,6 +97,10 @@ public class WerwolfGUI {
 		textInput.setText("");
 	}
 	
+	/**
+	 * Diese Methode sendet Text an den Controller.
+	 * @param message Nimmt den Text entgegen.
+	 */
 	public void sendText(String message) {
 		Controler.sendMessage(message);
 	}
