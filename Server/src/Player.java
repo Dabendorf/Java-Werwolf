@@ -6,7 +6,7 @@ public class Player {
 	public int countVotes = 0;
 	private RoleId role;
 	
-	public Player(String name){
+	public Player(){
 		this.name = name;
 		isAlive = true;
 	}

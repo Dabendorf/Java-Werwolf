@@ -29,7 +29,7 @@ public class Gamemaster {
 	}
 	
 	public Gamemaster(){
-		this.handler = new Handler();
+		this.handler = new Handler(players);
 	}
 	
 	public void registerPlayer(Player player){
