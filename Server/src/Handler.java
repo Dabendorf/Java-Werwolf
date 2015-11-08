@@ -7,6 +7,6 @@ public class Handler {
 		com = c;
 	}
 	
-	public void sendAction()
+	public void sendAction(){}
 
 }
