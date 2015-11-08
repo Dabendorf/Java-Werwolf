@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Random;
 
 public class Gamemaster {
 	
@@ -50,7 +51,24 @@ public class Gamemaster {
 	}
 	
 	public void start(){
-		sendToAll("Das Spiel startet jetzt.\nNacht fällt über Düsterwald, ");
+		sendToAll("Das Spiel startet jetzt.\n");
+		for(Player player : players){
+			player.setRole(RoleId.Villager);
+		}
+		Random random = new Random();
+		Player player;
+		// This piece of codes sets a fourth of the players to be werewolves
+		for(int i = 0; i < (int)players.size() / 4; i++){
+			 player = players.get(random.nextInt(players.size()));
+			 if(player.getRole() == RoleId.Villager){
+				 player.setRole(RoleId.Werewolf);
+				 handler.sendTo(player, "Du bist ein Werwolf!");
+			 }
+			 else
+				 i--;
+		}
+		sendToAll("Nacht fällt über Düsterwald.\n"
+				+ "Alle Bewohner des Dorfes schlafen ein.");
 	}
 	
 	public void run(){
