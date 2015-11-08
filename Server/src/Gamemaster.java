@@ -26,6 +26,8 @@ public class Gamemaster {
 	
 	public void registerPlayer(Player player){
 		players.add(player);
+		if(players.size() >= 8)
+			start();
 	}
 	
 	public void sendToAll(String message){
@@ -48,7 +50,7 @@ public class Gamemaster {
 	}
 	
 	public void start(){
-		
+		sendToAll("Das Spiel startet jetzt.\nNacht fällt über Düsterwald, ");
 	}
 	
 	public void run(){
