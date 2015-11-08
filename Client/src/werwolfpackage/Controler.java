@@ -46,7 +46,7 @@ public class Controler {
 	}
 
 	//Zu Server verbinden
-	public static void connectToServer(String ipAdress, String username) throws IOException
+	public static void connectToServer(String ipAdress, String username)
 	{
 		//Zu Server verbinden
 		try {
@@ -57,7 +57,12 @@ public class Controler {
 		}
 		System.out.println("Verbunden");
 		//Usernamen weitergeben
-		sendToServer("user;" + username);
+		try {
+			sendToServer("user;" + username);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	//Chatnachricht an Server senden
