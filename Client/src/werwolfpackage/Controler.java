@@ -73,9 +73,15 @@ public class Controler {
 			if (!(news == null))
 			{
 				String[] inputStream = news.split(";");
-				if (inputStream[0].equals("msg"))
-				{
+				if (inputStream[0].equals("msg")){
 					GUI.receiveText(inputStream[1]);
+				} else if (inputStream[0].equals("players")) {
+					String[] playerArr = new String[inputStream.length -1];
+					for (int i = 1; i<inputStream.length; i++)
+					{
+						playerArr[i-1] = inputStream[i];
+					}
+					Model.
 				}
 			}
 		}
