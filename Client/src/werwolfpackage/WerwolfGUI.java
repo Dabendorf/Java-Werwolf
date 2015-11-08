@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -21,11 +22,40 @@ import javax.swing.JTextField;
 public class WerwolfGUI {
 	
 	private JFrame frame1 = new JFrame("Werwolf");
+	private String name;
+	private String ipAdress;
 	private DefaultListModel<String> chatListModel = new DefaultListModel<String>();
     private JList<String> chatList = new JList<String>(chatListModel);
 	private JTextField textInput = new JTextField();
 	
 	public WerwolfGUI() {
+		askName();
+		loadFrame();
+	}
+	
+	public void askName() {
+		JTextField usernameField = new JTextField(new Feldbegrenzung(12), "", 0);
+		JTextField ipadressField = new JTextField();
+		
+		Object[] namensfrage = {"Spielername", usernameField, "Server-IP", ipadressField};
+	    JOptionPane pane = new JOptionPane(namensfrage, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION);
+	    pane.createDialog(null, "Spielerinformationen").setVisible(true);
+	    
+	    name = usernameField.getText();
+	    ipAdress = ipadressField.getText();
+	    
+	    if(name.equals("")) {
+	    	JOptionPane.showMessageDialog(null, "Bitte gib einen gültigen Namen ein.", "Name ungültig", JOptionPane.ERROR_MESSAGE);
+	    	askName();
+	    } else if(ipAdress.equals("")) {
+	    	JOptionPane.showMessageDialog(null, "Bitte gib eine gültige IP-Adresse ein.", "IP-Adresse ungültig", JOptionPane.ERROR_MESSAGE);
+	    	askName();
+	    } else {
+	    	Controler.connectToServer(ipAdress, name);
+	    }
+	}
+	
+	public void loadFrame() {
 		frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame1.setPreferredSize(new Dimension(600,400));
 		frame1.setMinimumSize(new Dimension(600,400));
@@ -59,11 +89,13 @@ public class WerwolfGUI {
 		chatList.setSelectionBackground(new Color(0x33B200));
 		chatListModel.addElement(text);
 		textInput.setText("");
-		
-		//Test
 	}
 	
 	public void sendText(String message) {
 		Controler.sendMessage(message);
 	}
+	
+	/*public static void main(String[] args) {
+		new WerwolfGUI();
+	}*/
 }
