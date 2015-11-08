@@ -27,7 +27,7 @@ public class Controler {
 		});
 	}
 
-	private static void connectToServer(String ipAdress, String username)
+	public static void connectToServer(String ipAdress, String username)
 	{
 		COM.connect(ipAdress,8080);
 		COM.sendMessage("user;" + username);
