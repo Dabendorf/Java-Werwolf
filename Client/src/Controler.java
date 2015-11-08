@@ -50,15 +50,16 @@ public class Controler {
 			String news = COM.getNewest();
 			if (!(news == null))
 			{
-				//Message received
+				String[] inputStream = news.split(";");
+				if (inputStream[0].equals("msg"))
+				{
+					GUI.receiveText(inputStream[1]);
+				}
 			}
 		}
 	}
 	
-	private void textMessageReceived(String message)
-	{
-		GUI.receiveText(message);
-	}
+	
 }
 
 
