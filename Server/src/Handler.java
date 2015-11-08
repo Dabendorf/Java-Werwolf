@@ -1,5 +1,5 @@
-import java.util.List;
-
+import java.net.Socket;
+import java.util.*;
 public class Handler {
 	
 	private Communicator com;
@@ -7,9 +7,12 @@ public class Handler {
 	
 	public Handler (Communicator c){
 		com = c;
+		new Thread(new incomingThread()).start();
 	}
 	
-	public void sendAction(){}
+	//command for Gamemaster from empfänger
+	
+	
 	
 	public void startGame(List<Player> players){
 		StringBuilder str = new StringBuilder();
@@ -18,24 +21,32 @@ public class Handler {
 			str.append(p.getName() + ";");
 		}
 		//Communicator stuff....
+		ArrayList<Socket> s = (ArrayList<Socket>) com.getClients();
+		com.send(s.get(0), str.toString());
 		
 	}
 	
-	private static void getMessage()
-	{
-		while (running)
-		{
-			Thread.sleep(500);
-			String news = COM.getNewest();
-			if (!(news == null))
-			{
-				String[] inputStream = news.split(";");
-				if (inputStream[0].equals("msg"))
-				{
-					GUI.receiveText(inputStream[1]);
-				}
-			}
+	public void handle(String cmd){
+		String action = cmd.split(";", 1)[0];
+		String context = cmd.split(";", 1)[1];
+		
+		switch(action){
+		
+		case "msg" :
+			//METHODE(context)
+			break;
+		
 		}
+	}
+	
+	//commands for sender
+	
+	private class incomingThread implements Runnable{
+		@Override
+		public void run() {
+			handle(com.getLatestMessage());
+		}
+		
 	}
 
 }
