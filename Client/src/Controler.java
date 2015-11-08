@@ -1,22 +1,39 @@
 
 public class Controler {
-<<<<<<< HEAD
-public void messageFromServer(String message)
-{
+	
+	Communicator COM;
+	Werwolf GUI;
+	
+	public void messageFromServer(String message)
+	{
 	
 
-}
-=======
-	public void main()
+	}
+	
+	public static void main(String[] args)
 	{
+		COM = new Communicator();
+		GUI = new Werwolf();
+		
 		
 	}
 	
-	private void sendMessage(String message)
+	private static void sendMessage(String message)
 	{
-		//Sende Nachricht an Server
+		//Nachricht senden
+		COM.send(message);
 	}
 	
+	private static void getMessage()
+	{
+		COM.getNewest();
+	}
 	
->>>>>>> origin/master
+	private void textMessageReceived(String message)
+	{
+		GUI.receiveText(message);
+	}
 }
+
+
+//getNewest
