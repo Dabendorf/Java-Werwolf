@@ -3,25 +3,27 @@ import java.net.*;
 import java.util.*;
 
 public class Communicator {
-	private DataOutputStream dops;
-	private DataInputStream dips;
+	private Socket socket;
 	private List<String> messages;
+	private BufferedReader br;
+	private PrintWriter pw;
 	
 	public Communicator() {
 		this.messages = new ArrayList<String>();
 	}
 	
 	public void connect(String ip, int port) throws IOException{
-		Socket sock = new Socket(ip, port);
-		this.dops = new DataOutputStream(sock.getOutputStream());
-		this.dips = new DataInputStream(sock.getInputStream());
+		this.socket = new Socket(ip, port);
+		
+		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 		
 		Thread t = new Thread(new receiveThread());
 		t.start();
 	}
 	
 	public void send(String message) throws IOException{
-		this.dops.write(message.getBytes());
+		pw.println(message);
 	}
 
 	public synchronized String getLatestMessage(){
@@ -38,7 +40,10 @@ public class Communicator {
 		public void run() {
 			while(true){
 				try {
-					System.out.println(dips.readUTF());
+					
+					String msg = br.readLine();
+					System.out.println("Got a message from the server: " + msg);
+					messages.add(msg);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
