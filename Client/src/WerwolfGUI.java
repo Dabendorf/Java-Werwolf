@@ -32,7 +32,7 @@ public class WerwolfGUI {
 		frame1.setMinimumSize(new Dimension(600,400));
 		//frame1.setMaximumSize(new Dimension(450,300));
 		frame1.setResizable(true);
-		chatList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		chatList.setLayoutOrientation(JList.VERTICAL_WRAP);
 		
 		Container cp = frame1.getContentPane();
 		cp.setLayout(new GridBagLayout());
@@ -41,7 +41,9 @@ public class WerwolfGUI {
 		textInput.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				receiveText(textInput.getText());
+				String message = textInput.getText();
+				receiveText(message);
+				sendText(message);
 			}
 		});
 		
@@ -60,11 +62,7 @@ public class WerwolfGUI {
 		textInput.setText("");
 	}
 	
-	/*public String sendText() {
-		
-	}*/
-	
-	public static void main(String[] args) {
-		new WerwolfGUI();
+	public void sendText(String message) {
+		Controler.send(message);
 	}
 }

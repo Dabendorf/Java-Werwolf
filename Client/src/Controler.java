@@ -1,52 +1,64 @@
 
 public class Controler {
-<<<<<<< HEAD
 	
-	Communicator COM;
-	Werwolf GUI;
-	
+	static Communicator COM;
+	static WerwolfGUI GUI;
+	static boolean running
 	
 	public static void main(String[] args)
-=======
-<<<<<<< HEAD
-public void messageFromServer(String message)
-{
-	
-
-}
-=======
-	public void main()
->>>>>>> origin/master
 	{
+		running = true;
 		COM = new Communicator();
-		GUI = new Werwolf();
 		
 		
+		Thread guiThread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				GUI = new WerwolfGUI();
+			}
+		});
+		guiThread.start();
+		
+		Thread messagThread = new Thread(new Runnable(){
+			@Override
+			public void run(){
+				getMessage();
+			}
+		})
+	}
+
+	
+	public static void sendMessage(String message)
+	{
+		//Nachricht generieren
+		String output = "msg;" + message;
+		
+		//Nachricht senden
+		COM.send(message);
 	}
 	
-	private String encode()
-	
-	private static void sendMessage(String message)
+	private static void sendToServer(output)
 	{
-		//Nachricht senden
-		COM.send(message)
+		COM.send(output);
 	}
 	
 	private static void getMessage()
 	{
-		COM.getNewest();
+		while (running)
+		{
+			Thread.sleep(500);
+			String news = COM.getNewest();
+			if (!(news == null))
+			{
+				//Message received
+			}
+		}
 	}
-	
-<<<<<<< HEAD
-
 	
 	private void textMessageReceived(String message)
 	{
 		GUI.receiveText(message);
 	}
-=======
->>>>>>> origin/master
->>>>>>> origin/master
 }
 
 
