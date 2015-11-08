@@ -2,8 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-import jdk.internal.util.xml.impl.ReaderUTF8;
-
 public class Communicator {
 	private ServerSocket ssock;
 	private HashMap<Socket, PrintWriter> clients;
