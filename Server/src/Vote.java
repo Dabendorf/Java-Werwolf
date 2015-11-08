@@ -17,7 +17,7 @@ public class Vote {
 		player.countVotes++;
 	}
 	
-	public void performVote(){
+	public Player performVote(){
 		// handler and networking
 		// end of votes
 		/*
@@ -26,7 +26,8 @@ public class Vote {
 			if(nominee.countVotes > loser.countVotes)
 				loser = nominee;
 		}
-		loser.kill();
+		return loser;
 		*/
+		return null; // vorerst
 	}
 }

@@ -96,5 +96,7 @@ public class Gamemaster {
 		}
 		// hier muss klargestellt werden, dass nur noch die woelfe chatten koennen
 		Vote vote = new Vote(werewolves);
+		// TODO auf votes warten und ggf. vote.receiveVote() aufrufen
+		
 	}
 }
