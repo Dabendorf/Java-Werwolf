@@ -20,14 +20,12 @@ public class Vote {
 	public Player performVote(){
 		// handler and networking
 		// end of votes
-		/*
+		
 		Player loser = new Player();
 		for(Player nominee : nominees){
 			if(nominee.countVotes > loser.countVotes)
 				loser = nominee;
 		}
 		return loser;
-		*/
-		return null; // vorerst
 	}
 }

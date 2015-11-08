@@ -3,6 +3,8 @@ import java.util.Random;
 
 public class Gamemaster {
 	
+	private final int MIN_PLAYERS = 4;
+	
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private Handler handler;
 	private boolean running = false;
@@ -32,7 +34,7 @@ public class Gamemaster {
 	
 	public void registerPlayer(Player player){
 		players.add(player);
-		if(players.size() >= 4)
+		if(players.size() >= MIN_PLAYERS)
 			start();
 	}
 	
@@ -90,11 +92,10 @@ public class Gamemaster {
 					werewolfPhase();
 					vote();
 				}
+				// Spiel ist hier zu Ende
 			}
 		});
 	}
-	
-	
 	
 	private void werewolfPhase(){
 		currentPhase = Phase.WerewolvesKilling;
