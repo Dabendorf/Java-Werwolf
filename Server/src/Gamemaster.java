@@ -28,8 +28,8 @@ public class Gamemaster {
 		Vote;
 	}
 	
-	public Gamemaster(Handler handler){
-		this.handler = handler;
+	public Gamemaster(){
+		this.handler = new Handler();
 	}
 	
 	public void registerPlayer(Player player){
@@ -122,9 +122,7 @@ public class Gamemaster {
 		Player loser = vote.performVote();
 		handler.sendToAll("Das Voting ist beendet! Das Opfer ist " + loser.getName() + " mit " + 
 				loser.countVotes + " Votes.");
-		
-		loser.kill();
-		alivePlayers.remove(loser);
+
 		kill(loser);
 	}
 	
