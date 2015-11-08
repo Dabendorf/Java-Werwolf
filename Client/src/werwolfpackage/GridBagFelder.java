@@ -1,3 +1,4 @@
+package werwolfpackage;
 import java.awt.GridBagConstraints;
 
 /**

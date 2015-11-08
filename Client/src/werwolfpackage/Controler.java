@@ -1,3 +1,4 @@
+package werwolfpackage;
 
 public class Controler {
 	
@@ -24,7 +25,7 @@ public class Controler {
 			public void run(){
 				getMessage();
 			}
-		})
+		});
 	}
 
 	
