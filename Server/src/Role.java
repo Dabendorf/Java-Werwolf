@@ -1,9 +1,5 @@
+
 public abstract class Role {
-	
-	public enum RoleId {
-		Villager,
-		Werewolf;
-	}
 	
 	RoleId id;
 	

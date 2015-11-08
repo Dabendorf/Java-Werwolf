@@ -3,6 +3,9 @@ import java.util.List;
 public class Gamemaster {
 	
 	private List<Player> players;
+	private Handler handler;
+	
+	private boolean running = false;
 	
 	public enum Actions{
 		// Basic Actions for the game
@@ -12,8 +15,8 @@ public class Gamemaster {
 		kill;
 	}
 	
-	public Gamemaster(){
-		
+	public Gamemaster(Handler handler){
+		this.handler = handler;
 	}
 	
 	public void registerPlayer(Player player){
@@ -24,17 +27,17 @@ public class Gamemaster {
 		// send given message to all players
 		/*
 		for (Player player : players){
-			player.sendMessage(message);
+			handler.sendMessage(player, message);
 		}
 		*/
 	}
 	
-	public void sendToWerewolves(String message){
+	public void sendToRole(String message, RoleId role){
 		//  send message to all werewolves
 		/*
 		for (Player player : players){
-			if (Player.getRole() == RoleId.Werewolf)
-				player.sendMessage(message);
+			if (Player.getRole() == role)
+				handler.sendMessage(player, message);
 		}
 		*/
 	}
@@ -43,7 +46,7 @@ public class Gamemaster {
 		
 	}
 	
-	public void tick(){
+	public void run(){
 		
 	}
 }

@@ -6,6 +6,6 @@ public class Villager extends Role{
 
 	@Override
 	public String name() {
-		return "Dorfbewohner";
+		return "Villager";
 	}
 }
